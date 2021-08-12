@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.9.0/axios.js"></script>
+    <script>
+        function testGet() {
+            if (window.axios) {
+                // 获取post列表
+                window.axios.get('http://localhost:3001/posts').then(response => {
+                    console.log(response)
+                })
+                window.axios.get('http://localhost:3001/posts/1').then(response => {
+                    console.log(response)
+                })
+                window.axios.get('http://localhost:3001/posts?id=1').then(response => {
+                    console.log(response)
+                })
+            }
+        }
+
+        function testPost() {
+            if (window.axios) {
+                window.axios.post('http://localhost:3001/posts', { "title": "json-server2", "author": "typicode3" }).then(response => {
+                    console.log('/posts post '.response.data)
+                })
+            }
+        }
+        // PUT请求做更新操作
+        function testPut() {
+            if (window.axios) {
+                window.axios.put('http://localhost:3001/posts/3', { "title": "json-server33", "author": "typicode33" }).then(response => {
+                    console.log('/posts put '.response)
+                })
+            }
+        }
+        // 做数据删除
+        function testDelete() {
+            if (window.axios) {
+                window.axios.delete('http://localhost:3001/posts/3').then(res => {
+                    console.log(res)
+                })
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <button onclick="testGet()">GET请求</button>
+        <button onclick="testPost()">POST请求</button>
+        <button onclick="testPut()">PUT请求</button>
+        <button onclick="testDelete()">Delete请求</button>
+    </div>
+
+</body>
+
+</html>
