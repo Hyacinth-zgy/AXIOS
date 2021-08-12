@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 基础axios
+    function axios({
+      url,
+      method = 'GET',
+      params = {},
+      data = {}
+    }) {
+      return new Promise((resolve, reject) => {
+        // 创建http对象
+        const requst = new XMLHttpRequest();
+        // 打开链接
+        let quertString = ''
+        const keys = Object.keys(params);
+        if (keys.length > 0) {
+          keys.forEach(key => {
+            quertString += `${key}=${params[key]}&`
+          })
+        }
+        if (quertString) {
+          quertString = quertString.substring(0, quertString.length - 1)
+        }
+        url += '?' + quertString
+        requst.open(method, url, true);
+        // 发送请求
+        if (method === 'GET') {
+          requst.send()
+        } else if (method === 'POST') {
+          // 处理POST data数据
+          // 告诉服务器发送的是JSON格式的数据
+          requst.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+          // 发送JSON格式的数据
+          requst.send(JSON.stringify(data));
+        }
+      })
+    }
+
+    function testGet() {
+      axios({
+        url: 'http://localhost:3001/posts',
+        method: 'GET',
+        params: {
+          id: 1
+        }
+      })
+    }
+
+    function testPost() {
+      axios({
+        url: 'http://localhost:3001/posts',
+        method: 'POST',
+        data: {
+          "title": "json-server3",
+          "author": "typicode3"
+        }
+      })
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="testGet()">GET请求</button>
+  <button onclick="testPost()">POST请求</button>
+  <button onclick="testPut()">PUT请求</button>
+  <button onclick="testDelete()">Delete请求</button>
+</body>
+
+</html>
