@@ -46,10 +46,10 @@ AXIOS详解
 #AXIOS常用API
 1. axios(config):通用/最本质的发任意类型请求的方式
 2. axios(url[,config]):可以只指定url发get请求
-3. axios.request(config):等同于axios(config)
+3. axios.request(config):等同于axios(config) 
 4. axios.get(url[,config]):发get请求
 5. axios.delete(url[,,config]):发delete请求
-6. axios.post(url,[,data,config]):发post请求
+6. axios.post(url,[,data,config]):发post请求  
 7. axios.put(url,[,data,config]):发put请求
 
 8. axios.defaults.xxx:请求的默认全局配置
@@ -66,8 +66,10 @@ AXIOS详解
 
 
 #axios.create(config)
+#创建一个新的实例可能是需要使用一个新的配置来发送请求
 1.  根据指定配置创建一个新的 axios,也就就每个新 axios都有自己的配置
 2.  新axios只是没有取消请求和批量发请求的方法,其它所有语法都是一致的
 3.  为什么要设计这个语法?
 (1)需求:项目中有部分接口需要的配置与另一部分接口需要的配置不太一样,如何处理
 (2)解决:创建2个新 axios,每个都有自己特有的配置,分别应用到不同要求的接口请求中
+
