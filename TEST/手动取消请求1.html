@@ -5,8 +5,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      let cancel;
+      function getProductOne() {
+        // 用于保存取消请求的函数
+        if (window.axios) {
+          axios({
+            url: "http://localhost:4000/productone",
+            cancelToken: new axios.CancelToken((c) => {
+              // C是用于取消请求的函数
+              // 保存取消函数，用于将来可能取消当亲请求
+              cancel = c;
+            }),
+          }).then(
+            (res) => {
+              cancel = null;
+              console.log("one成功了:", res.data);
+            },
+            (err) => {
+              cancel = null;
+              console.log(err);
+            }
+          );
+        }
+      }
+
+      function getProductTwo() {
+        if (window.axios) {
+          axios({
+            url: "http://localhost:4000/producttwo",
+            cancelToken: new axios.CancelToken((c) => {
+              cancel = c;
+            }),
+          }).then(
+            (res) => {
+              cancel = null;
+              console.log("two成功了:", res.data);
+            },
+            (err) => {
+              cancel = null;
+              console.log(err);
+            }
+          );
+        }
+      }
+      function cancelGetProduct() {
+        // 执行cancel取消请求
+        // 请求被取消了
+        if (typeof cancel === "function") {
+          cancel("请求被取消了");
+        }
+      }
+    </script>
   </head>
   <body>
-    展示
+    <button onclick="getProductOne()">获取商品列表一</button>
+    <button onclick="getProductTwo()">获取商品列表二</button>
+    <button onclick="cancelGetProduct()">取消请求</button>
   </body>
 </html>
